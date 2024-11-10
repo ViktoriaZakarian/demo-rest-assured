@@ -16,4 +16,12 @@ public class LoginRequest {
     public static String getBody(String email, String password) {
         return "{\"emailOrLogin\":\"" + email + "\",\"password\":\"" + password + "\"}";
     }
+
+    public static String getBody(String email) {
+        return "{\"emailOrLogin\":\"" + email + "\"}";
+    }
+
+    public static String getBody() {
+        return "";
+    }
 }
