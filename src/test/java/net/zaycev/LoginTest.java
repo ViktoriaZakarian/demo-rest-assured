@@ -19,4 +19,17 @@ public class LoginTest {
                 .statusCode(200)
                 .body("error" , equalTo("wrong login or password"));
     }
+
+    @Test
+    public void testNoPassword() {
+        given()
+                .headers(LoginRequest.getHeaders())
+                .body(LoginRequest.getBody("qwert@gmail.com", ""))
+                .when()
+                .post(LoginRequest.URL_LOGIN)
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("error" , equalTo("wrong login or password"));
+    }
 }
