@@ -32,4 +32,17 @@ public class LoginTest {
                 .statusCode(200)
                 .body("error" , equalTo("wrong login or password"));
     }
+
+    @Test
+    public void testNoEmail() {
+        given()
+                .headers(LoginRequest.getHeaders())
+                .body(LoginRequest.getBody("", "qwert"))
+                .when()
+                .post(LoginRequest.URL_LOGIN)
+                .then()
+                .log().all()
+                .statusCode(404)
+                .body(equalTo("Not Found"));
+    }
 }
