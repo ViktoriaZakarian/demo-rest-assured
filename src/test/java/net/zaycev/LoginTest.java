@@ -58,4 +58,17 @@ public class LoginTest {
                 .statusCode(404)
                 .body(equalTo("Not Found"));
     }
+
+    @Test
+    public void testNoFieldPassword() {
+        given()
+                .headers(LoginRequest.getHeaders())
+                .body(LoginRequest.getBody("test@gmail.com"))
+                .when()
+                .post(LoginRequest.URL_LOGIN)
+                .then()
+                .log().all()
+                .statusCode(404)
+                .body(equalTo("Not Found"));
+    }
 }
