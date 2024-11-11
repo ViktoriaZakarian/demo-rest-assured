@@ -112,4 +112,32 @@ public class LoginTest {
                 .body("Table[0].Error", equalTo (1002))
                 .body("Table[0].ErrorDescription", equalTo("Ошибка Json"));
     }
+
+    @Test
+    public void testNoServiceNumber() {
+        given()
+                .body("{\"CRC\":\"\",\"Packet\":{\"MethodName\":\"GetJWT\",\"JWT\":null,\"Data\":{\"LoginName\":\"\",\"Password\":\"\",\"LoginNameTypeId\":\"2\"}}}")
+                .when()
+                .post(LoginRequest.URL_LOGIN)
+                .then()
+                .contentType("text/plain;charset=UTF-8")
+                .log().all()
+                .statusCode(200)
+                .body("Table[0].Error", equalTo (999999))
+                .body("Table[0].ErrorDescription", equalTo("Неизвестная ошибка"));
+    }
+
+    @Test
+    public void testNoPacket() {
+        given()
+                .body("{\"CRC\":\"\",\"ServiceNumber\":\"E811AE79-DFDE-4F85-8715-DD3A8308707E\",\"Data\":{\"LoginName\":\"\",\"Password\":\"\",\"LoginNameTypeId\":\"2\"}}")
+                .when()
+                .post(LoginRequest.URL_LOGIN)
+                .then()
+                .contentType("text/plain;charset=UTF-8")
+                .log().all()
+                .statusCode(200)
+                .body("Table[0].Error", equalTo (1002))
+                .body("Table[0].ErrorDescription", equalTo("Ошибка Json"));
+    }
 }
