@@ -74,7 +74,7 @@ public class LoginTest {
     @Test
     public void testNoFieldLogin() {
         given()
-                .body("{\"CRC\":\"\",\"Packet\":{\"MethodName\":\"GetJWT\",\"JWT\":null,\"ServiceNumber\":\"E811AE79-DFDE-4F85-8715-DD3A8308707E\",\"Data\":{\"Password\":\"\",\"LoginNameTypeId\":\"2\"}}}")
+                .body(LoginRequest.getBodyNoFieldLogin())
                 .when()
                 .post(LoginRequest.URL_LOGIN)
                 .then()
@@ -88,7 +88,7 @@ public class LoginTest {
     @Test
     public void testNoFieldPassword() {
         given()
-                .body("{\"CRC\":\"\",\"Packet\":{\"MethodName\":\"GetJWT\",\"JWT\":null,\"ServiceNumber\":\"E811AE79-DFDE-4F85-8715-DD3A8308707E\",\"Data\":{\"LoginName\":\"\",\"LoginNameTypeId\":\"2\"}}}")
+                .body(LoginRequest.getBodyNoFieldPassword())
                 .when()
                 .post(LoginRequest.URL_LOGIN)
                 .then()
@@ -102,7 +102,7 @@ public class LoginTest {
     @Test
     public void testNoData() {
         given()
-                .body("{\"CRC\":\"\",\"Packet\":{\"MethodName\":\"GetJWT\",\"JWT\":null,\"ServiceNumber\":\"E811AE79-DFDE-4F85-8715-DD3A8308707E\"}}")
+                .body(LoginRequest.getBodyNoData())
                 .when()
                 .post(LoginRequest.URL_LOGIN)
                 .then()
@@ -116,7 +116,7 @@ public class LoginTest {
     @Test
     public void testNoServiceNumber() {
         given()
-                .body("{\"CRC\":\"\",\"Packet\":{\"MethodName\":\"GetJWT\",\"JWT\":null,\"Data\":{\"LoginName\":\"\",\"Password\":\"\",\"LoginNameTypeId\":\"2\"}}}")
+                .body(LoginRequest.getBodyNoNumberService())
                 .when()
                 .post(LoginRequest.URL_LOGIN)
                 .then()
@@ -130,7 +130,7 @@ public class LoginTest {
     @Test
     public void testNoPacket() {
         given()
-                .body("{\"CRC\":\"\",\"ServiceNumber\":\"E811AE79-DFDE-4F85-8715-DD3A8308707E\",\"Data\":{\"LoginName\":\"\",\"Password\":\"\",\"LoginNameTypeId\":\"2\"}}")
+                .body(LoginRequest.getBodyNoPacket())
                 .when()
                 .post(LoginRequest.URL_LOGIN)
                 .then()
