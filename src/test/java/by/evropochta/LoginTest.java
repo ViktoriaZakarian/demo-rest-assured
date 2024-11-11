@@ -70,4 +70,46 @@ public class LoginTest {
                 .body("Table[0].Error", equalTo (50009))
                 .body("Table[0].ErrorDescription", equalTo("Неверный логин или пароль"));
     }
+
+    @Test
+    public void testNoFieldLogin() {
+        given()
+                .body("{\"CRC\":\"\",\"Packet\":{\"MethodName\":\"GetJWT\",\"JWT\":null,\"ServiceNumber\":\"E811AE79-DFDE-4F85-8715-DD3A8308707E\",\"Data\":{\"Password\":\"\",\"LoginNameTypeId\":\"2\"}}}")
+                .when()
+                .post(LoginRequest.URL_LOGIN)
+                .then()
+                .contentType("text/plain;charset=UTF-8")
+                .log().all()
+                .statusCode(200)
+                .body("Table[0].Error", equalTo (0))
+                .body("Table[0].ErrorDescription", equalTo("Неизвестно что"));
+    }
+
+    @Test
+    public void testNoFieldPassword() {
+        given()
+                .body("{\"CRC\":\"\",\"Packet\":{\"MethodName\":\"GetJWT\",\"JWT\":null,\"ServiceNumber\":\"E811AE79-DFDE-4F85-8715-DD3A8308707E\",\"Data\":{\"LoginName\":\"\",\"LoginNameTypeId\":\"2\"}}}")
+                .when()
+                .post(LoginRequest.URL_LOGIN)
+                .then()
+                .contentType("text/plain;charset=UTF-8")
+                .log().all()
+                .statusCode(200)
+                .body("Table[0].Error", equalTo (0))
+                .body("Table[0].ErrorDescription", equalTo("Неизвестно что"));
+    }
+
+    @Test
+    public void testNoData() {
+        given()
+                .body("{\"CRC\":\"\",\"Packet\":{\"MethodName\":\"GetJWT\",\"JWT\":null,\"ServiceNumber\":\"E811AE79-DFDE-4F85-8715-DD3A8308707E\"}}")
+                .when()
+                .post(LoginRequest.URL_LOGIN)
+                .then()
+                .contentType("text/plain;charset=UTF-8")
+                .log().all()
+                .statusCode(200)
+                .body("Table[0].Error", equalTo (1002))
+                .body("Table[0].ErrorDescription", equalTo("Ошибка Json"));
+    }
 }
